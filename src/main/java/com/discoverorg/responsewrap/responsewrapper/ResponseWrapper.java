@@ -1,18 +1,35 @@
 package com.discoverorg.responsewrap.responsewrapper;
 
-public class ResponseWrapper {
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+
+public class ResponseWrapper<T> extends ResponseEntity {
     private boolean success = false;
     private Object response;
     private Exception cause;
 
-    public ResponseWrapper(Object response) {
-        this.response = response;
-        success = true;
+    public ResponseWrapper(HttpStatus status) {
+        super(status);
     }
 
-    public ResponseWrapper(Exception cause) {
-        this.cause = cause;
+    public ResponseWrapper(HttpStatus status, Exception e) {
+        super(status);
+        cause = e;
     }
+
+    public ResponseWrapper(Object body, HttpStatus status) {
+        super(body, status);
+    }
+
+    public ResponseWrapper(MultiValueMap headers, HttpStatus status) {
+        super(headers, status);
+    }
+
+    public ResponseWrapper(Object body, MultiValueMap headers, HttpStatus status) {
+        super(body, headers, status);
+    }
+
 
     public Object getResponse() {
         return response;
